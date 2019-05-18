@@ -55,7 +55,7 @@ simpleselect.func = function (node, req, res) {
         //console.log(body);
         let $ = cheerio.load(body);
         $("title").text("Unicorns!");
-        console.log("Bpdy is : ",$("body").text());
+        //console.log("Bpdy is : ",$("body").text());
         $("body").append("<style>.mystupidcssclass { background-color: red;}</style>");
         $("body").prepend("<div class='mystupidcssclass'>Hacked!</div>");
         $("body").append("<script>alert('Hello World!');</script>");
@@ -64,7 +64,7 @@ simpleselect.func = function (node, req, res) {
             var src = $(value).attr("src");
             //console.log(src);
             if(src.search(/:\/\//g) == -1) {
-                src = "http://localhost:3000/" + src + "?url="+req.customUrl;
+                src = "http://"+req.hostname+"/" + src + "?url="+req.customUrl;
             }
             //console.log(src);
             $(value).attr("src", src);
@@ -73,7 +73,7 @@ simpleselect.func = function (node, req, res) {
             var src = $(value).attr("href");
             //console.log(src);
             if(src.search(/:\/\//g) == -1) {
-                src = "http://localhost:3000/" + src + "?url="+req.customUrl;
+                src = "http://"+req.hostname+"/" + src + "?url="+req.customUrl;
             }
             //console.log(src);
             $(value).attr("href", src);
@@ -95,7 +95,7 @@ app.use("/*", harmon([], selects, true) ,(req, res, next) => {
         return res.end();
     }
     var url = req.query.url;
-    console.log(req.socket.toString());
+    //console.log(req.socket.toString());
     if(socketsToURL[req.socket.toString()] === undefined) {
         socketsToURL[req.socket.toString()]=url;
     }
