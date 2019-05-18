@@ -91,6 +91,9 @@ selects.push(simpleselect);
 //app.use('/', indexRouter);
 //app.use('/users', usersRouter);
 app.use("/*", harmon([], selects, true) ,(req, res, next) => {
+    if(req.baseUrl == "/favicon.ico") {
+        return res.end();
+    }
     var url = req.query.url;
     console.log(req.socket.toString());
     if(socketsToURL[req.socket.toString()] === undefined) {
